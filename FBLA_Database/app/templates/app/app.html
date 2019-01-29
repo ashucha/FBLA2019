@@ -1,0 +1,69 @@
+{% extends 'app/layout.html' %}
+
+{% block title %}
+    BookTrack - The #1 E-book Tracking Service
+{% endblock %}
+
+{% block auth %}
+    <div class="navbar mb-5">
+        <h1 class="col-7">Report<sup><a href="/admin/" target="_blank" class="text-primary h6">[Edit]</a></sup></h1>
+        <form class="input-group float-right col-4" action="/search/" method="POST">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="search">Search</label>
+            </div>
+            <input class="form-control" id="search" name="search" />
+            <div class="input-group-append">
+                <button class="btn btn-danger" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    {% if checkout_list %}
+        <table class="table table-borderless table-light table-striped table-hover mx-auto mt-5">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Book Code</th>
+                    <th>Email</th>
+                    <th>Checkout Date</th>
+                    <th>Due Date</th>
+                    <th>Class</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for checkout in checkout_list %}
+                <tr>
+                    <td>{{ checkout.first_name }}
+                        <sup><a href="/admin/app/checkout/{{ checkout.id }}/change/" target="_blank" class="text-primary">[Edit]</a></sup>
+                        <sup><a href="/admin/app/checkout/{{ checkout.id }}/delete/" target="_blank" class="text-danger">[Delete]</a></sup>
+                    </td>
+                    <td>{{ checkout.last_name }}</td>
+                    <td>{{ checkout.code }}</td>
+                    <td>{{ checkout.email }}</td>
+                    <td>{{ checkout.checkout_date|date:'d-M-Y' }}</td>
+                    <td>{{ checkout.due_date|date:'d-M-Y' }}</td>
+                    <td>{{ checkout.year }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+    <p>There are no checkout entries. <a href="/admin/" target="_blank">Click here</a> to add some.</p>
+    {% endif %}
+{% endblock %}
+{% block unauth %}
+<div class="jumbotron bg-light">
+    <h1 class="display-5">Alert!</h1>
+    <p class="lead">
+        You are seeing this message because you are not authorised to view the secured content.
+        To view this content, you must be logged in.
+    </p>
+    <hr />
+    <p>
+        When redirected, please enter your username and password and refresh this tab to view the content
+    </p>
+    <a class="btn btn-danger" href="/admin/" target="_blank">Login</a>
+</div>
+{% endblock %}

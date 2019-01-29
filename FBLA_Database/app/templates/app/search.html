@@ -1,0 +1,14 @@
+﻿{% extends 'app/layout.html' %}
+
+{% block content %}
+    <form class="input-group float-right col-4" action="/search/" method="post">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="search">Search</label>
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-danger" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+{% endblock %}

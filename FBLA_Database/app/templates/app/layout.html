@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+            {% endblock %}
+        </title>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}" />
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/all.js' %}"></script>
+        <style>
+            ::selection {
+                color: #fff;
+                background: #dc3545;
+            }
+            body {
+                height: 10000px;
+            }
+            .nav-link {
+                transition: 0.15s;
+            }
+            .nav-link:hover {
+                transition: 0.15s;
+            }
+        </style>
+    </head>
+    <body>
+        {% block navbar %}
+        {% endblock %}
+        <div class="navbar navbar-light bg-light justify-content-between">
+            <div class="ml-5 mt-2">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <p class="navbar-brand text-dark">BookTracker</p>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-danger" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/app/">App</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav mr-5">
+                {% if request.user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="dropdown-toggle btn btn-danger"
+                       id="dropdownMenuLink"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="true">
+                        Welcome, {{ request.user.username }}
+                    </button>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="/admin/">Profile</a>
+                        <a class="dropdown-item text-danger" href="/admin/logout/">Logout</a>
+                    </div>
+                </div>
+                {% else %}
+                <a class="btn btn-danger" href="/admin/" target="_blank">Login</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="main-body mx-5 my-4">
+            {% block content %}
+            {% endblock %}
+            {% if request.user.is_authenticated %}
+                {% block auth %}
+                {% endblock %}
+            {% else %}
+                {% block unauth %}
+                {% endblock %}
+            {% endif %}
+        </div>
+    </body>
+</html>
