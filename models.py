@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, forms
 from datetime import datetime, timedelta
 
 def deadline():
@@ -15,3 +15,7 @@ class Checkout(models.Model):
 
     def __str__(self):
         return str(self.id - 3 + 1000)
+
+
+class Filter(forms.Form):
+    query = forms.CharField(max_length=30)

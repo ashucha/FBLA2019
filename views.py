@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.views.generic.list import ListView
-from django.http import HttpResponseRedirect
+from django.views.generic import ListView
+from django.http import HttpResponse
 from app.models import Checkout
 from app.forms import SearchForm
+from django.db.models import Q
 
 class CheckoutListView(ListView):
     model = Checkout
@@ -20,12 +21,4 @@ def index(request):
 def app(request):
     return render(request, 'app/app.html')
 
-def query(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/search/')
-    else:
-        form = SearchForm()
-
-    return render(request, 'search.html', {'form': form})
+class
