@@ -1,18 +1,18 @@
 {% extends 'app/layout.html' %}
 
 {% block title %}
-    Dashboard | BookTracker
+    BookTrack - The #1 E-book Tracking Service
 {% endblock %}
 
 {% block auth %}
     <div class="navbar mb-5">
         <h1 class="col-7">Report<sup><a href="/admin/" target="_blank" class="text-primary h6">[Edit]</a></sup></h1>
-        <form class="form-inline input-group float-right col-4" id="searchform" action="/app/}" method="get" aria-required="true">
+        <form class="form-inline input-group float-right col-4" method="POST">
             {% csrf_token %}
             <div class="input-group-prepend">
                 <label class="input-group-text rounded-left" for="search">Search</label>
             </div>
-            <input class="form-control" id="search" type="text" name="q">
+            {{ form.as_table }}
             <div class="input-group-append">
                 <button class="btn btn-danger" type="submit">
                     <i class="fas fa-search"></i>
@@ -21,7 +21,6 @@
         </form>
     </div>
     {% if checkout_list %}
-        
         <table class="table table-borderless table-light table-striped table-hover mx-auto mt-5">
             <thead>
                 <tr>
@@ -31,7 +30,6 @@
                     <th>Email</th>
                     <th>Checkout Date</th>
                     <th>Due Date</th>
-                    <th>Status</th>
                     <th>Class</th>
                 </tr>
             </thead>
@@ -47,7 +45,6 @@
                     <td>{{ checkout.email }}</td>
                     <td>{{ checkout.checkout_date|date:'d-M-Y' }}</td>
                     <td>{{ checkout.due_date|date:'d-M-Y' }}</td>
-                    {% if checkout.is_overdue %}<td class="text-danger">Overdue</td>{% else %}<td class="text-success">Not Overdue</td>{% endif %}
                     <td>{{ checkout.year }}</td>
                 </tr>
                 {% endfor %}

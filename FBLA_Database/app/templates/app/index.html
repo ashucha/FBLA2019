@@ -1,11 +1,21 @@
 {% extends 'app/layout.html' %}
 
 {% block title %}
-    BookTrack - The #1 E-book Tracking Service
+    BookTracker - The #1 E-book Tracking Service
 {% endblock %}
 
 {% block content %}
-    
+    <div class="jumbotron bg-light">
+        <h1 class="display-5">Welcome!</h1>
+        <p class="lead">
+            BookTracker is a high-quality, high-speed e-book tracking service.
+        </p>
+        <hr />
+        <p>
+            Start by registering an account from the command line or log in if you already have an account and click the button below to get started!
+        </p>
+        <a class="btn btn-danger" href="/app/">Get Started</a>
+    </div>
 {% endblock %}
 
 {% block table %}

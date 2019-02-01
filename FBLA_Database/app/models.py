@@ -1,8 +1,25 @@
-from django.db import models, forms
-from datetime import datetime, timedelta
+from django.db import models
+from django.db.models.functions import ExtractWeek
+from datetime import datetime, timedelta, date
+
+today = datetime.today()
+
+'''def is_overdue():
+    if datetime.now() > deadline:
+        return True
+    return False'''
+
+weekly = (
+          Checkout.objects
+          .annotate(week=ExtractWeek('checkout_date'))
+          .values('week')
+          )
+
+def renew(self):
+    return self.due_date + timedelta(days=30)
 
 def deadline():
-    return datetime.today() + timedelta(days=30)
+    return today + timedelta(days=30)
 
 class Checkout(models.Model):
     first_name = models.CharField(max_length=20)
@@ -14,8 +31,6 @@ class Checkout(models.Model):
     year = models.CharField(max_length=4, choices=[('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022')])
 
     def __str__(self):
-        return str(self.id - 3 + 1000)
+        return str(self.id)
 
 
-class Filter(forms.Form):
-    query = forms.CharField(max_length=30)

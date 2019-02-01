@@ -1,0 +1,21 @@
+{% extends 'app/layout.html' %}
+
+{% block search %}
+    <form class="form-inline input-group float-right col-4" method="POST">
+        {% csrf_token %}
+        <div class="input-group-prepend">
+            <label class="input-group-text rounded-left" for="search">Search</label>
+        </div>
+        {{ form.as_table }}
+        <div class="input-group-append">
+            <button class="btn btn-danger" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+    {% for result in checkout_list %}
+    {% if result.id == text %}
+    <p>{{ result.first_name }} {{ result.last_name }}</p>
+    {% else %}
+    <p>Sorry, we did not find any checkouts with that id.</p>
+{% endblock %}
